@@ -37,7 +37,7 @@ trait TAddMethod {
 
     //Returns added method with given name (or null if not found)
     protected function get_method($name) {
-        $methods = static::get_methods(true);
+        $methods = static::get_methods();
         return array_key_exists($name, $methods) ?
             $methods[$name]->bindTo($this, $this) : null;
     }
@@ -46,7 +46,7 @@ trait TAddMethod {
     public static function has_method($name) {
         return
             method_exists(get_called_class(), $name) ||
-            array_key_exists($name, static::get_methods(true))
+            array_key_exists($name, static::get_methods())
         ;
     }
 
@@ -57,13 +57,11 @@ trait TAddMethod {
 
     //Returns array of methods which have been added to the class, optionally
     //merged with methods which have been added to parent/grandparent/etc.
-    protected static function get_methods($recurse = false) {
+    protected static function get_methods() {
         $class  = get_called_class();
         $methods = [];
-        if($recurse) {
-            $parent = get_parent_class($class);
-            if($parent) $methods = array_merge($methods, $parent::get_methods(true));
-        }
+        $parent = get_parent_class($class);
+        if($parent) $methods = array_merge($methods, $parent::get_methods());
         if(array_key_exists($class, static::$added_methods))
             $methods = array_merge($methods, static::$added_methods[$class]);
         return $methods;
