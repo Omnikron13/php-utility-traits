@@ -22,6 +22,7 @@
  SOFTWARE.
 */
 
+//Trait for facilitating deserialising objects from JSON
 trait TJsonDecode {
     protected static $json_decode_fields = [];
 
