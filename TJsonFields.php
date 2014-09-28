@@ -25,7 +25,7 @@
 require_once('TJsonEncode.php');
 require_once('TJsonDecode.php');
 
-//Trait providing a flexible implementation of the JsonSerializable interface
+//Trait providing shorthand access to TJsonEncode & TJsonDecode
 trait TJsonFields {
     use TJsonEncode;
     use TJsonDecode;
